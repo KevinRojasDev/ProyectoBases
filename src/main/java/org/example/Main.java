@@ -11,9 +11,5 @@ public class Main {
 
         usuario usu = daoUsuario.getInstance().retornaUsuario("CAJERO_1","cajero_1");
         System.out.println(usu.toString());
-        // TEST URANUS19
-        //Ay amor eres lo máximo
-        //Guaro!!!}
-        //Guarox2
     }
 }
