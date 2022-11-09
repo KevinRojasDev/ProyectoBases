@@ -1,6 +1,7 @@
 package Model;
 
 public class producto {
+    private int id;
     private String descripcion;
     private float peso;
     private int cantidad;
@@ -12,7 +13,8 @@ public class producto {
     public producto() {
     }
 
-    public producto(String descripcion, float peso, int cantidad, float precio, String plu, String ean, int id_Categoria) {
+    public producto(int id,String descripcion, float peso, int cantidad, float precio, String plu, String ean, int id_Categoria) {
+        this.id = id;
         this.descripcion = descripcion;
         this.peso = peso;
         this.cantidad = cantidad;
@@ -21,6 +23,10 @@ public class producto {
         this.ean = ean;
         this.id_Categoria = id_Categoria;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getDescripcion() {
         return descripcion;
