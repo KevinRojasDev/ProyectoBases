@@ -1,6 +1,12 @@
 package DAO.daoFactura;
 
 
+import DAO.conexion;
+import Model.factura;
+import Model.usuario;
+
+import java.sql.*;
+
 public class daoFactura {
     private static daoFactura mInstance;
 
