@@ -46,9 +46,11 @@ public class daoFactura {
 //            con = conexion.getConnection(email, contrasena);
 //            con.close();
             con2 = conexion.getConnectionDBA();
-            PreparedStatement statement = con2.prepareStatement("SELECT * FROM factura where id = " + codigo);
+            CallableStatement statement = con2.prepareCall("{call prc_mostrar_factura(?,?)}");
+            statement.setInt(1, codigo);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
             statement.execute();
-            ResultSet rs = statement.executeQuery();
+            ResultSet rs = (ResultSet) statement.getObject(2);
             while (rs.next()) {
                 factura = new factura(rs.getString("cajero"),rs.getInt("caja"),rs.getString("fecha"),rs.getString("hora"),
                                       rs.getFloat("subtotal"),rs.getFloat("total"));
@@ -61,6 +63,8 @@ public class daoFactura {
         }
         return factura;
     }
+
+
 
     // Metodo eliminar
 

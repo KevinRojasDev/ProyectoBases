@@ -4,6 +4,7 @@ package DAO.daoProductos;
 import DAO.conexion;
 import Model.producto;
 import Model.usuario;
+import oracle.jdbc.OracleTypes;
 
 import java.sql.*;
 
@@ -113,9 +114,11 @@ public class daoProductos {
 //            con = conexion.getConnection(email, contrasena);
 //            con.close();
             con2 = conexion.getConnectionDBA();
-            PreparedStatement statement = con2.prepareStatement("SELECT * FROM producto where id = " + codigo);
+            CallableStatement statement = con2.prepareCall("{call prc_mostrar_producto_codigo(?,?)}");
+            statement.setInt(1, codigo);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
             statement.execute();
-            ResultSet rs = statement.executeQuery();
+            ResultSet rs = (ResultSet) statement.getObject(2);
             while (rs.next()) {
                 producto = new producto(rs.getInt("id"), rs.getString("descripcion"), rs.getFloat("peso"),
                         rs.getInt("cantidad"), rs.getFloat("precio"), rs.getString("plu"), rs.getString("ean"),
@@ -140,9 +143,11 @@ public class daoProductos {
 //            con = conexion.getConnection(email, contrasena);
 //            con.close();
             con2 = conexion.getConnectionDBA();
-            PreparedStatement statement = con2.prepareStatement("SELECT * FROM producto where descripcion = " + "'" + descripcion + "'");
+            CallableStatement statement = con2.prepareCall("{call prc_mostrar_producto_descripcion(?,?)}");
+            statement.setString(1, descripcion);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
             statement.execute();
-            ResultSet rs = statement.executeQuery();
+            ResultSet rs = (ResultSet) statement.getObject(2);
             while (rs.next()) {
                 producto = new producto(rs.getInt("id"), rs.getString("descripcion"), rs.getFloat("peso"),
                         rs.getInt("cantidad"), rs.getFloat("precio"), rs.getString("plu"), rs.getString("ean"),

@@ -1,12 +1,14 @@
 package DAO.daoDetalle;
 
 import DAO.conexion;
-import DAO.daoFactura.daoFactura;
 import Model.detalle;
-import Model.producto;
 import Model.usuario;
+import oracle.jdbc.OracleTypes;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class daoDetalle {
 
@@ -51,9 +53,11 @@ public class daoDetalle {
 //            con = conexion.getConnection(email, contrasena);
 //            con.close();
             con2 = conexion.getConnectionDBA();
-            PreparedStatement statement = con2.prepareStatement("SELECT * FROM detalle_factura where id = " + codigo);
+            CallableStatement statement = con2.prepareCall("{call prc_muestra_detalle(?,?)}");
+            statement.setInt(1, codigo);
+            statement.registerOutParameter(2, OracleTypes.CURSOR);
             statement.execute();
-            ResultSet rs = statement.executeQuery();
+            ResultSet rs = (ResultSet) statement.getObject(2);
             while (rs.next()) {
                 detalle = new detalle(rs.getInt("id"), rs.getInt("cantidad"), rs.getInt("id_Producto"), rs.getInt("id_Factura"));
             }
@@ -65,6 +69,8 @@ public class daoDetalle {
         }
         return detalle;
     }
+
+
 
 // Metodo eliminar
 

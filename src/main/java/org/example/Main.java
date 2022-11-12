@@ -2,14 +2,13 @@ package org.example;
 
 import DAO.daoDetalle.daoDetalle;
 import DAO.daoFactura.daoFactura;
-import DAO.daoProductos.daoProductos;
 import DAO.daoUsuarios.daoUsuario;
 import Model.detalle;
 import Model.factura;
 import Model.producto;
 import Model.usuario;
 
-import java.sql.*;
+import java.sql.SQLException;
 
 
 public class Main {
@@ -32,9 +31,9 @@ public class Main {
         daoFactura.getInstance().insertarFactura(fac, usu);
         factura fac2 = daoFactura.getInstance().busquedaFacturaCodigo(1, usu);
         detalle det = new detalle(0, 1, 1, 1);
-        daoDetalle.getInstance().insertarDetalle(det, usu);
+       daoDetalle.getInstance().insertarDetalle(det, usu);
         detalle det2 = daoDetalle.getInstance().busquedaDetalleCodigo(1, usu);
-        daoDetalle.getInstance().EliminarDetalle(1, usu);
-        daoFactura.getInstance().EliminarFactura(1, usu);
+//        daoDetalle.getInstance().EliminarDetalle(1, usu);
+//        daoFactura.getInstance().EliminarFactura(1, usu);
     }
 }
